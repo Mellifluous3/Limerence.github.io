@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Limerence</title>
+
+    <!-- Load pixel-style Minecraft-like font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        #backgroundContainer {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("craftg.gif") no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding-top: 20%;
+        }
+
+        .content p {
+            font-family: 'Press Start 2P', monospace; /* pixel-style font */
+            font-weight: normal;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            color: #ffdf9a;
+            text-shadow:
+                0 0 8px rgba(255, 174, 66, 0.7),
+                0 0 18px rgba(255, 140, 0, 0.55),
+                0 0 35px rgba(255, 100, 0, 0.35);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            line-height: 1.4em;
+            margin: 0.3em 0;
+        }
+
+        #playButton {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 18px 45px;
+            font-size: 1.6rem;
+            font-weight: 600;
+            cursor: pointer;
+            z-index: 9999;
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: #e8e8e8;
+            box-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 15px rgba(80,80,80,0.25);
+            transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease, border 0.25s ease;
+        }
+
+        #playButton:hover {
+            transform: translate(-50%, -50%) scale(1.07);
+            background: rgba(30, 30, 30, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 25px rgba(0,0,0,0.8), 0 0 18px rgba(110,110,110,0.25);
+        }
+
+        #playButton:active {
+            transform: translate(-50%, -50%) scale(0.96);
+        }
+    </style>
+</head>
+
+<body>
+
+<button id="playButton">Mellifluous</button>
+
+<div id="backgroundContainer">
+    <div class="overlay"></div>
+    <div class="content">
+        <p id="subtitle"></p>
+    </div>
+</div>
+
+<audio id="myAudio" src="Frank Ocean - White Ferrari - Blonded (mp3cut.net).mp3"></audio>
+
+<script>
+const btn = document.getElementById("playButton");
+const audio = document.getElementById("myAudio");
+const bg = document.getElementById("backgroundContainer");
+const subtitle = document.getElementById("subtitle");
+
+// Subtitles array with multi-line text using <br>
+const subtitles = [
+    { start: 3, end: 6, text: "I'm sure we're taller<br>in another Dimension" },
+    { start: 7, end: 10, text: "You say we're smaller<br>and not worth the mention" },
+    { start: 11, end: 15, text: "You're tired of movin',<br>your body's achin'" },
+    { start: 15, end: 19, text: "We could vacay,<br>there's places to go" },
+    { start: 20, end: 24, text: "Clearly, this isn't all<br>that there is" },
+    { start: 24, end: 26, text: "Can't take what's been given" },
+    { start: 26, end: 30, text: "But we're so okay here,<br>we're doing fine" },
+    { start: 31, end: 32, text: "Primal and naked" },
+    { start: 33, end: 37, text: "You dream of walls<br>that hold us in prison" },
+    { start: 37, end: 41, text: "It's just a skull,<br>least that's what they call it" },
+    { start: 41, end: 43, text: "And we're free to roam" }
+];
+
+let currentIndex = -1;
+
+btn.addEventListener("click", () => {
+    audio.play().then(() => {
+        btn.style.display = "none";
+        bg.style.display = "block";
+    }).catch(err => console.log("Audio play blocked:", err));
+});
+
+audio.addEventListener("timeupdate", () => {
+    const currentTime = audio.currentTime;
+    const index = subtitles.findIndex(s => currentTime >= s.start && currentTime < s.end);
+
+    if(index !== currentIndex) {
+        currentIndex = index;
+        if(index === -1) {
+            subtitle.style.opacity = 0;
+        } else {
+            subtitle.innerHTML = subtitles[index].text;
+            subtitle.style.opacity = 1;
+        }
+    }
+});
+</script>
+
+</body>
+</html>
