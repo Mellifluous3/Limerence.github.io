@@ -49,10 +49,9 @@
             font-size: 1.5rem;
             letter-spacing: 1px;
             color: #ffdf9a;
-            text-shadow:
-                0 0 8px rgba(255, 174, 66, 0.7),
-                0 0 18px rgba(255, 140, 0, 0.55),
-                0 0 35px rgba(255, 100, 0, 0.35);
+            text-shadow: 0 0 8px rgba(255, 174, 66, 0.7),
+                         0 0 18px rgba(255, 140, 0, 0.55),
+                         0 0 35px rgba(255, 100, 0, 0.35);
             opacity: 0;
             transition: opacity 0.5s ease;
             line-height: 1.4em;
@@ -96,7 +95,7 @@
             left: 50%;
             transform: translateX(-50%);
             text-align: center;
-            display: none;
+            display: none; /* hidden initially */
             z-index: 9999;
         }
 
@@ -194,6 +193,7 @@ const audio = document.getElementById("myAudio");
 const bg = document.getElementById("backgroundContainer");
 const subtitle = document.getElementById("subtitle");
 
+// 🔹 Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBT00PFXmX0oNf5puYDZ20Vg-qkyBRTQgs",
   authDomain: "limerence-61ccc.firebaseapp.com",
@@ -203,20 +203,24 @@ const firebaseConfig = {
   appId: "1:365628060522:web:60aa2c63eb82b1628cab13",
   measurementId: "G-Z9XQWSSXK7"
 };
-
 firebase.initializeApp(firebaseConfig);
-
 const db = firebase.database();
 const likeRef = db.ref("likes");
 
+// 🔹 Play button
 btn.addEventListener("click", () => {
     audio.play().then(() => {
+        btn.style.display = "none";
+        bg.style.display = "block";
+        likeContainer.style.display = "block"; // show heart now
+    }).catch(() => {
         btn.style.display = "none";
         bg.style.display = "block";
         likeContainer.style.display = "block";
     });
 });
 
+// 🔹 Floating heart & particles
 function spawnFloatingHeart() {
     const heart = document.createElement("div");
     heart.className = "floating-heart";
@@ -245,8 +249,10 @@ function spawnParticles() {
     }
 }
 
+// 🔹 Like button
 let liked = false;
 
+// Auto-load like count
 likeRef.on("value", snapshot => {
     const count = snapshot.val() || 0;
     likeCountDisplay.textContent = count;
@@ -268,6 +274,7 @@ likeBtn.addEventListener("click", () => {
     }
 });
 
+// 🔹 Subtitles
 const subtitles = [
     { start: 3, end: 6, text: "I'm sure we're taller<br>in another Dimension" },
     { start: 7, end: 10, text: "You say we're smaller<br>and not worth the mention" },
