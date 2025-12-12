@@ -1,166 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Limerence</title>
+<meta charset="UTF-8">
+<title>Limerence</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: black;
-            font-family: Arial, sans-serif;
-            overflow: hidden;
-        }
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: black;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
 
-        #backgroundContainer {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("craftg.gif") no-repeat center center fixed;
-            background-size: cover;
-        }
+/* Background */
+#backgroundContainer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("craftg.gif") no-repeat center center fixed;
+    background-size: cover;
+}
 
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.25);
-            z-index: 1;
-        }
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    z-index: 1;
+}
 
-        .content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            padding-top: 20%;
-        }
+/* Content subtitles */
+.content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding-top: 20%;
+}
 
-        .content p {
-            font-family: 'Press Start 2P', monospace;
-            font-weight: normal;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
-            color: #ffdf9a;
-            text-shadow: 0 0 8px rgba(255, 174, 66, 0.7),
-                         0 0 18px rgba(255, 140, 0, 0.55),
-                         0 0 35px rgba(255, 100, 0, 0.35);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            line-height: 1.4em;
-            margin: 0.3em 0;
-        }
+.content p {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1.5rem;
+    color: #ffdf9a;
+    text-shadow: 0 0 8px #ffdf9a, 0 0 18px #ffdf9a55, 0 0 35px #ffdf9a33;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    line-height: 1.4em;
+    margin: 0.3em 0;
+}
 
-        #playButton {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 18px 45px;
-            font-size: 1.6rem;
-            font-weight: 600;
-            cursor: pointer;
-            z-index: 9999;
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(6px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            color: #e8e8e8;
-            box-shadow: 0 0 10px rgba(0,0,0,0.9), 0 0 15px rgba(80,80,80,0.25);
-            transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease, border 0.25s ease;
-        }
+/* Play button */
+#playButton {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 18px 45px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 9999;
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    color: #e8e8e8;
+    box-shadow: 0 0 10px rgba(0,0,0,0.9),0 0 15px rgba(80,80,80,0.25);
+    transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.25s ease, border 0.25s ease;
+}
 
-        #playButton:hover {
-            transform: translate(-50%, -50%) scale(1.07);
-            background: rgba(30, 30, 30, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 0 25px rgba(0,0,0,0.8), 0 0 18px rgba(110,110,110,0.25);
-        }
+#playButton:hover {
+    transform: translate(-50%, -50%) scale(1.07);
+    background: rgba(30,30,30,0.75);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 0 25px rgba(0,0,0,0.8),0 0 18px rgba(110,110,110,0.25);
+}
 
-        #playButton:active {
-            transform: translate(-50%, -50%) scale(0.96);
-        }
+#playButton:active {
+    transform: translate(-50%, -50%) scale(0.96);
+}
 
-        /* ❤️ HEART BUTTON */
-        #likeContainer {
-            position: fixed;
-            top: 65%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            display: none; /* hidden initially */
-            z-index: 9999;
-        }
+/* Like button container */
+#likeContainer {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    display: none; /* hidden initially */
+    z-index: 9999;
+}
 
-        #likeButton {
-            font-size: 3rem;
-            color: #ffffffa8;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
-        }
+/* Heart button */
+#likeButton {
+    font-size: 3rem;
+    color: #ffffffa8;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s ease, color 0.25s ease, text-shadow 0.25s ease;
+}
 
-        #likeCount {
-            margin-top: 10px;
-            font-size: 1.2rem;
-            font-family: 'Press Start 2P', monospace;
-            color: #ffdf9a;
-            text-shadow: 0 0 6px #ffdf9a, 0 0 12px #ffdf9a90;
-        }
+#likeButton.liked {
+    color: #ffdf9a;
+    text-shadow: 0 0 10px #ffdf9a,0 0 20px #ffdf9a,0 0 35px #ffdf9a70;
+    animation: pulse 0.5s ease;
+}
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.35); }
-            100% { transform: scale(1); }
-        }
+#likeCount {
+    margin-top: 10px;
+    font-size: 1.2rem;
+    font-family: 'Press Start 2P', monospace;
+    color: #ffdf9a;
+    text-shadow: 0 0 6px #ffdf9a, 0 0 12px #ffdf9a90;
+}
 
-        #likeButton.liked {
-            color: #ffdf9a;
-            text-shadow: 0 0 10px #ffdf9a, 0 0 20px #ffdf9a, 0 0 35px #ffdf9a70;
-            animation: pulse 0.5s ease;
-        }
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.35); }
+    100% { transform: scale(1); }
+}
 
-        .floating-heart {
-            position: fixed;
-            left: 50%;
-            top: 65%;
-            transform: translateX(-50%);
-            font-size: 1.8rem;
-            color: #ffdf9a;
-            opacity: 1;
-            pointer-events: none;
-            animation: floatUp 1.6s ease-out forwards;
-            z-index: 5000;
-        }
+/* Floating hearts */
+.floating-heart {
+    position: fixed;
+    left: 50%;
+    top: 65%;
+    transform: translateX(-50%);
+    font-size: 1.8rem;
+    color: #ffdf9a;
+    opacity: 1;
+    pointer-events: none;
+    animation: floatUp 1.6s ease-out forwards;
+    z-index: 5000;
+}
 
-        @keyframes floatUp {
-            0% { opacity: 1; transform: translate(-50%, 0) scale(1); }
-            100% { opacity: 0; transform: translate(-50%, -120px) scale(1.8); }
-        }
+@keyframes floatUp {
+    0% { opacity: 1; transform: translate(-50%,0) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -120px) scale(1.8); }
+}
 
-        .particle {
-            position: fixed;
-            font-size: 1rem;
-            color: #ffdf9a;
-            opacity: 1;
-            pointer-events: none;
-            z-index: 6000;
-            animation: particleFly 0.9s ease-out forwards;
-        }
+/* Particles */
+.particle {
+    position: fixed;
+    font-size: 1rem;
+    color: #ffdf9a;
+    opacity: 1;
+    pointer-events: none;
+    z-index: 6000;
+    animation: particleFly 0.9s ease-out forwards;
+}
 
-        @keyframes particleFly {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
-        }
-    </style>
+@keyframes particleFly {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.2); }
+}
+
+</style>
 </head>
 
 <body>
@@ -181,10 +184,14 @@
 
 <audio id="myAudio" src="Frank Ocean - White Ferrari - Blonded (mp3cut.net).mp3"></audio>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
 <script>
+// --------------------
+// Variables
+// --------------------
 const btn = document.getElementById("playButton");
 const likeBtn = document.getElementById("likeButton");
 const likeContainer = document.getElementById("likeContainer");
@@ -193,7 +200,9 @@ const audio = document.getElementById("myAudio");
 const bg = document.getElementById("backgroundContainer");
 const subtitle = document.getElementById("subtitle");
 
-// 🔹 Firebase
+// --------------------
+// Firebase
+// --------------------
 const firebaseConfig = {
   apiKey: "AIzaSyBT00PFXmX0oNf5puYDZ20Vg-qkyBRTQgs",
   authDomain: "limerence-61ccc.firebaseapp.com",
@@ -207,20 +216,20 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const likeRef = db.ref("likes");
 
-// 🔹 Play button
+// --------------------
+// Play button logic
+// --------------------
 btn.addEventListener("click", () => {
     audio.play().then(() => {
         btn.style.display = "none";
         bg.style.display = "block";
-        likeContainer.style.display = "block"; // show heart now
-    }).catch(() => {
-        btn.style.display = "none";
-        bg.style.display = "block";
-        likeContainer.style.display = "block";
-    });
+        likeContainer.style.display = "block"; // show heart button
+    }).catch(err => console.log(err));
 });
 
-// 🔹 Floating heart & particles
+// --------------------
+// Floating hearts & particles
+// --------------------
 function spawnFloatingHeart() {
     const heart = document.createElement("div");
     heart.className = "floating-heart";
@@ -230,29 +239,27 @@ function spawnFloatingHeart() {
 }
 
 function spawnParticles() {
-    for (let i = 0; i < 12; i++) {
+    for(let i=0;i<12;i++){
         const p = document.createElement("div");
         p.className = "particle";
         p.textContent = "❤";
-
-        const angle = (Math.PI * 2 * i) / 12;
+        const angle = (Math.PI*2*i)/12;
         const distance = 80;
-
-        p.style.left = `${window.innerWidth / 2}px`;
-        p.style.top = `${window.innerHeight * 0.65}px`;
-
-        p.style.setProperty("--dx", `${Math.cos(angle) * distance}px`);
-        p.style.setProperty("--dy", `${Math.sin(angle) * distance}px`);
-
+        p.style.left = `${window.innerWidth/2}px`;
+        p.style.top = `${window.innerHeight*0.65}px`;
+        p.style.setProperty("--dx", `${Math.cos(angle)*distance}px`);
+        p.style.setProperty("--dy", `${Math.sin(angle)*distance}px`);
         document.body.appendChild(p);
-        setTimeout(() => p.remove(), 900);
+        setTimeout(()=>p.remove(),900);
     }
 }
 
-// 🔹 Like button
+// --------------------
+// Like button logic
+// --------------------
 let liked = false;
 
-// Auto-load like count
+// Load current global like count
 likeRef.on("value", snapshot => {
     const count = snapshot.val() || 0;
     likeCountDisplay.textContent = count;
@@ -260,45 +267,45 @@ likeRef.on("value", snapshot => {
 
 likeBtn.addEventListener("click", () => {
     liked = !liked;
-
-    if (liked) {
+    if(liked){
         likeBtn.classList.add("liked");
         likeBtn.textContent = "❤";
-        likeRef.transaction(current => (current || 0) + 1);
+        likeRef.transaction(current => (current||0)+1);
         spawnFloatingHeart();
         spawnParticles();
     } else {
         likeBtn.classList.remove("liked");
         likeBtn.textContent = "♡";
-        likeRef.transaction(current => Math.max((current || 0) - 1, 0));
+        likeRef.transaction(current => Math.max((current||0)-1,0));
     }
 });
 
-// 🔹 Subtitles
+// --------------------
+// Subtitles
+// --------------------
 const subtitles = [
-    { start: 3, end: 6, text: "I'm sure we're taller<br>in another Dimension" },
-    { start: 7, end: 10, text: "You say we're smaller<br>and not worth the mention" },
-    { start: 11, end: 15, text: "You're tired of movin',<br>your body's achin'" },
-    { start: 15, end: 19, text: "We could vacay,<br>there's places to go" },
-    { start: 20, end: 24, text: "Clearly, this isn't all<br>that there is" },
-    { start: 24, end: 26, text: "Can't take what's been given" },
-    { start: 26, end: 30, text: "But we're so okay here,<br>we're doing fine" },
-    { start: 31, end: 32, text: "Primal and naked" },
-    { start: 33, end: 37, text: "You dream of walls<br>that hold us in prison" },
-    { start: 37, end: 41, text: "It's just a skull,<br>least that's what they call it" },
-    { start: 41, end: 43, text: "And we're free to roam" }
+    { start:3, end:6, text:"I'm sure we're taller<br>in another Dimension" },
+    { start:7, end:10, text:"You say we're smaller<br>and not worth the mention" },
+    { start:11, end:15, text:"You're tired of movin',<br>your body's achin'" },
+    { start:15, end:19, text:"We could vacay,<br>there's places to go" },
+    { start:20, end:24, text:"Clearly, this isn't all<br>that there is" },
+    { start:24, end:26, text:"Can't take what's been given" },
+    { start:26, end:30, text:"But we're so okay here,<br>we're doing fine" },
+    { start:31, end:32, text:"Primal and naked" },
+    { start:33, end:37, text:"You dream of walls<br>that hold us in prison" },
+    { start:37, end:41, text:"It's just a skull,<br>least that's what they call it" },
+    { start:41, end:43, text:"And we're free to roam" }
 ];
 
-let currentIndex = -1;
+let currentIndex=-1;
 
 audio.addEventListener("timeupdate", () => {
     const t = audio.currentTime;
-    const idx = subtitles.findIndex(s => t >= s.start && t < s.end);
-
-    if (idx !== currentIndex) {
-        currentIndex = idx;
-        subtitle.style.opacity = idx === -1 ? 0 : 1;
-        if (idx !== -1) subtitle.innerHTML = subtitles[idx].text;
+    const idx = subtitles.findIndex(s=>t>=s.start && t<s.end);
+    if(idx!==currentIndex){
+        currentIndex=idx;
+        subtitle.style.opacity = idx===-1 ? 0 : 1;
+        if(idx!==-1) subtitle.innerHTML=subtitles[idx].text;
     }
 });
 </script>
